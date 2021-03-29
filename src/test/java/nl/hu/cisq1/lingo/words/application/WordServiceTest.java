@@ -14,22 +14,34 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * This is a unit test.
  *
- * It tests the behaviors of our system under test,
+ * <p>It tests the behaviors of our system under test,
  * WordService, in complete isolation:
  * - its methods are called by the test framework instead of a controller
  * - the WordService calls a test double instead of an actual repository
  */
-class WordServiceTest {
+class WordServiceTest
+{
+    static Stream<Arguments> randomWordExamples()
+    {
+        return Stream.of(
+                Arguments.of(5, "tower"),
+                Arguments.of(6, "castle"),
+                Arguments.of(7, "knights")
+        );
+    }
 
     @ParameterizedTest
     @DisplayName("requests a random word of a specified length from the repository")
     @MethodSource("randomWordExamples")
-    void providesRandomWord(int wordLength, String word) {
+    void providesRandomWord(int wordLength, String word)
+    {
         SpringWordRepository mockRepository = mock(SpringWordRepository.class);
         when(mockRepository.findRandomWordByLength(wordLength))
                 .thenReturn(Optional.of(new Word(word)));
@@ -42,7 +54,8 @@ class WordServiceTest {
 
     @Test
     @DisplayName("throws exception if length not supported")
-    void unsupportedLength() {
+    void unsupportedLength()
+    {
         SpringWordRepository mockRepository = mock(SpringWordRepository.class);
         when(mockRepository.findRandomWordByLength(anyInt()))
                 .thenReturn(Optional.empty());
@@ -52,14 +65,6 @@ class WordServiceTest {
         assertThrows(
                 WordLengthNotSupportedException.class,
                 () -> service.provideRandomWord(5)
-        );
-    }
-
-    static Stream<Arguments> randomWordExamples() {
-        return Stream.of(
-                Arguments.of(5, "tower"),
-                Arguments.of(6, "castle"),
-                Arguments.of(7, "knights")
         );
     }
 }

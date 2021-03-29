@@ -5,23 +5,30 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "words")
-public class Word {
+public class Word
+{
     @Id
     @Column(name = "word")
     private String value;
     private Integer length;
 
-    public Word() {}
-    public Word(String word) {
+    public Word()
+    {
+    }
+
+    public Word(String word)
+    {
         this.value = word;
         this.length = word.length();
     }
 
-    public String getValue() {
-        return value;
+    public String getValue()
+    {
+        return this.value;
     }
 
-    public Integer getLength() {
-        return length;
+    public Integer getLength()
+    {
+        return this.length;
     }
 }

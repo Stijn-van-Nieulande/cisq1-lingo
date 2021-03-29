@@ -8,14 +8,17 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class WordService {
+public class WordService
+{
     private final SpringWordRepository wordRepository;
 
-    public WordService(SpringWordRepository wordRepository) {
+    public WordService(SpringWordRepository wordRepository)
+    {
         this.wordRepository = wordRepository;
     }
 
-    public String provideRandomWord(Integer length) {
+    public String provideRandomWord(Integer length)
+    {
         return this.wordRepository
                 .findRandomWordByLength(length)
                 .orElseThrow(() -> new WordLengthNotSupportedException(length))

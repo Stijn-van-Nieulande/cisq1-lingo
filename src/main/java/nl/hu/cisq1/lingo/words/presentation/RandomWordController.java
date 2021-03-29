@@ -11,15 +11,18 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("words")
-public class RandomWordController {
+public class RandomWordController
+{
     private final WordService service;
 
-    public RandomWordController(WordService service) {
+    public RandomWordController(WordService service)
+    {
         this.service = service;
     }
 
     @GetMapping("random")
-    public String getRandomWord(@RequestParam Integer length) {
+    public String getRandomWord(@RequestParam Integer length)
+    {
         try {
             return this.service.provideRandomWord(length);
         } catch (WordLengthNotSupportedException exception) {

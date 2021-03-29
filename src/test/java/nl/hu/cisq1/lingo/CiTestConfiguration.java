@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("ci")
 @TestConfiguration
-public class CiTestConfiguration {
+public class CiTestConfiguration
+{
     @Bean
-    CommandLineRunner importWords(SpringWordRepository repository) {
+    CommandLineRunner importWords(SpringWordRepository repository)
+    {
         return new WordTestDataFixtures(repository);
     }
 }
