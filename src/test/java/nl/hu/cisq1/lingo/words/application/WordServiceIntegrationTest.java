@@ -14,23 +14,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * the data layer and the framework.
  * In a dev environment, we test against the actual database.
  *
- * In continuous integration pipelines, we should not
+ * <p>In continuous integration pipelines, we should not
  * use the actual database as we don't have one.
  * We want to replace it with an in-memory database.
  *
- * Set the profile to CI, so that application-ci.properties is loaded
+ * <p>Set the profile to CI, so that application-ci.properties is loaded
  * and an import script is run.
  **/
 @SpringBootTest
 @Import(CiTestConfiguration.class)
-class WordServiceIntegrationTest {
-
+class WordServiceIntegrationTest
+{
     @Autowired
     private WordService service;
 
     @Test
     @DisplayName("provides random 5, 6 and 7 letter words")
-    void providesRandomWord() {
+    void providesRandomWord()
+    {
         for (int wordLength = 5; wordLength <= 7; wordLength++) {
             String randomWord = this.service.provideRandomWord(wordLength);
             assertEquals(wordLength, randomWord.length());
