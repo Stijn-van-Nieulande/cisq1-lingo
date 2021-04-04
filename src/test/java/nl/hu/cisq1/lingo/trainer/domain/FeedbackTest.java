@@ -33,7 +33,7 @@ class FeedbackTest
 
     @Test
     @DisplayName("word is guessed if all letters are correct")
-    public void wordIsGuessed()
+    void wordIsGuessed()
     {
         final Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertTrue(feedback.isWordGuessed());
@@ -41,7 +41,7 @@ class FeedbackTest
 
     @Test
     @DisplayName("word is not guessed if some of the letters are not correct")
-    public void wordIsNotGuessed()
+    private void wordIsNotGuessed()
     {
         final Feedback feedback = new Feedback("woord", List.of(Mark.INVALID, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertFalse(feedback.isWordGuessed());
@@ -49,7 +49,7 @@ class FeedbackTest
 
     @Test
     @DisplayName("guess is invalid if some of the letters are invalid")
-    public void guessIsInvalid()
+    void guessIsInvalid()
     {
         final Feedback feedback = new Feedback("woord", List.of(Mark.INVALID, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertTrue(feedback.isGuessInvalid());
@@ -57,7 +57,7 @@ class FeedbackTest
 
     @Test
     @DisplayName("guess is not invalid if none of the letters are invalid")
-    public void guessIsNotInvalid() // Oftewel isValid? (⓿_⓿)
+    void guessIsNotInvalid() // Oftewel isValid? (⓿_⓿)
     {
         final Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertFalse(feedback.isGuessInvalid());
@@ -65,14 +65,14 @@ class FeedbackTest
 
     @Test
     @DisplayName("exception is thrown when word length doesn't match marks length")
-    public void wordLengthDoesNotCorrespond()
+    void wordLengthDoesNotCorrespond()
     {
         assertThrows(InvalidFeedbackException.class, () -> new Feedback("woord", List.of(Mark.CORRECT)));
     }
 
     @Test
     @DisplayName("exception is thrown when word length doesn't match previous hint length")
-    public void wordLengthDoesNotCorrespondPreviousHintLength()
+    void wordLengthDoesNotCorrespondPreviousHintLength()
     {
         assertThrows(InvalidFeedbackException.class, () -> {
             final Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
@@ -83,7 +83,7 @@ class FeedbackTest
     @ParameterizedTest
     @MethodSource("provideHintExamples")
     @DisplayName("gives hint based on provided previous hint")
-    public void giveHintHasExpectedResult(@NotNull final String expected, @NotNull final String previousHint, @NotNull final Feedback feedback)
+    void giveHintHasExpectedResult(@NotNull final String expected, @NotNull final String previousHint, @NotNull final Feedback feedback)
     {
         Objects.requireNonNull(expected);
         Objects.requireNonNull(previousHint);
@@ -97,7 +97,7 @@ class FeedbackTest
 
     @Test
     @DisplayName("equals and hashcode are working as expected")
-    public void equalsAndHashcodeAreCorrectlyImplemented()
+    void equalsAndHashcodeAreCorrectlyImplemented()
     {
         final Feedback feedback1 = new Feedback("woord", List.of(Mark.INVALID, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         final Feedback feedback2 = new Feedback("woord", List.of(Mark.INVALID, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
