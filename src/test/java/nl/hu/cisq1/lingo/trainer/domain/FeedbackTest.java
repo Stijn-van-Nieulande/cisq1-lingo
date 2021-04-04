@@ -13,7 +13,9 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -68,10 +70,20 @@ class FeedbackTest
         assertThrows(InvalidFeedbackException.class, () -> new Feedback("woord", List.of(Mark.CORRECT)));
     }
 
+    @Test
+    @DisplayName("exception is thrown when word length doesn't match previous hint length")
+    public void wordLengthDoesNotCorrespondPreviousHintLength()
+    {
+        assertThrows(InvalidFeedbackException.class, () -> {
+            final Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
+            feedback.giveHint("w...".toCharArray());
+        });
+    }
+
     @ParameterizedTest
     @MethodSource("provideHintExamples")
     @DisplayName("gives hint based on provided previous hint")
-    public void giveHint(@NotNull final String expected, @NotNull final String previousHint, @NotNull final Feedback feedback)
+    public void giveHintHasExpectedResult(@NotNull final String expected, @NotNull final String previousHint, @NotNull final Feedback feedback)
     {
         Objects.requireNonNull(expected);
         Objects.requireNonNull(previousHint);
@@ -81,5 +93,22 @@ class FeedbackTest
         final char[] givenHint = feedback.giveHint(previousHint.toCharArray());
 
         assertArrayEquals(expectedHint, givenHint);
+    }
+
+    @Test
+    @DisplayName("equals and hashcode are working as expected")
+    public void equalsAndHashcodeAreCorrectlyImplemented()
+    {
+        final Feedback feedback1 = new Feedback("woord", List.of(Mark.INVALID, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
+        final Feedback feedback2 = new Feedback("woord", List.of(Mark.INVALID, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
+        final Feedback feedback3 = new Feedback("adder", List.of(Mark.INVALID, Mark.PRESENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
+        final Feedback feedback4 = new Feedback("adder", List.of(Mark.INVALID, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
+
+        assertEquals(feedback1, feedback1); // if (this == o) return true;
+        assertNotEquals(feedback1, new Object()); // if (!(o instanceof Feedback)) return false;
+        assertNotEquals(feedback1, feedback3); // Objects.equals(this.attempt, feedback.attempt)
+        assertNotEquals(feedback3, feedback4); // && this.marks.equals(feedback.marks);
+
+        assertEquals(feedback1.hashCode(), feedback2.hashCode()); // hashcode
     }
 }
