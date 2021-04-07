@@ -13,7 +13,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GameTest
@@ -74,7 +76,6 @@ class GameTest
         this.game.guessWord("conto");
         this.game.guessWord("conto");
 
-        // TODO: Upgrade to AttemptLimitReachedException
         assertThrows(GameStateException.class, () -> this.game.guessWord("weebo"));
     }
 
@@ -140,5 +141,49 @@ class GameTest
         this.game.guessWord(word);
 
         assertEquals(expectedNextWordLength, this.game.getNextWordLength());
+    }
+
+    @Test
+    @DisplayName("the game state is still on WAITING when no rounds are available")
+    void gameStateIsStillWaitingWhenNoRoundsAvailable()
+    {
+        this.game.performGameChecks();
+        assertEquals(GameState.WAITING, this.game.getGameState());
+    }
+
+    @Test
+    @DisplayName("the game state is still on PLAYING when not lost, won or waiting, word limit isn't reached and has feedback")
+    void gameStateIsStillWaitingWhenNoRoundsAvailable2()
+    {
+        this.game.startNewRound("borax");
+        this.game.guessWord("conto");
+
+        assertEquals(GameState.PLAYING, this.game.getGameState());
+    }
+
+    @Test
+    @DisplayName("the game state is LOST when the word guess limit is reached and the word is not guessed yet")
+    void gameStateIsLostWhenWordGuessLimitIsReachedAndNotGuessed()
+    {
+        this.game.startNewRound("borax");
+        this.game.guessWord("conto");
+        this.game.guessWord("conto");
+        this.game.guessWord("conto");
+        this.game.guessWord("conto");
+        this.game.guessWord("conto");
+
+        assertTrue(this.game.getCurrentRound().get().isWordGuessLimitReached());
+        assertFalse(this.game.getCurrentRound().get().isWordGuessed());
+        assertEquals(GameState.LOST, this.game.getGameState());
+    }
+
+    @Test
+    @DisplayName("the game state is WON when the word is guessed")
+    void gameStateIsWonWhenWordIsGuessed()
+    {
+        this.game.startNewRound("borax");
+        this.game.guessWord("borax");
+
+        assertEquals(GameState.WON, this.game.getGameState());
     }
 }
