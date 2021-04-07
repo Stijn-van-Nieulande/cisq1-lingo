@@ -1,6 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import com.sun.istack.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exception.GameStateException;
 
 import javax.persistence.CascadeType;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "game")
 public class Game

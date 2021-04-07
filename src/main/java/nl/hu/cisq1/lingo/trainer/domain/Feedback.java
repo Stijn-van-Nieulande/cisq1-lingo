@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 import java.util.List;
 import java.util.Objects;
 
+@EqualsAndHashCode
+@ToString
 @Entity
 public class Feedback
 {
@@ -79,30 +83,5 @@ public class Feedback
     public List<Mark> getMarks()
     {
         return this.marks;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "Feedback{"
-                + "attempt='" + this.attempt + '\''
-                + ", marks=" + this.marks
-                + '}';
-    }
-
-    @Override
-    public boolean equals(final Object o)
-    {
-        if (this == o) return true;
-        if (!(o instanceof Feedback)) return false;
-        final Feedback feedback = (Feedback) o;
-        return Objects.equals(this.attempt, feedback.attempt)
-                && this.marks.equals(feedback.marks);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(this.attempt, this.marks);
     }
 }

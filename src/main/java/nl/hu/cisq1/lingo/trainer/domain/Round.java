@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exception.AttemptLimitReachedException;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "round")
 public class Round
