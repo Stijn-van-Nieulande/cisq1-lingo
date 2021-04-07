@@ -5,6 +5,8 @@ on:
     branches:
       - develop
       - main
+  schedule:
+    - cron: '0 4 * * 0,3' # At 04:00 on Sunday and Wednesday.
 
 jobs:
   build:

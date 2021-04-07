@@ -1,18 +1,37 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 import java.util.Objects;
 
+@EqualsAndHashCode
+@ToString
+@Entity
 public class Feedback
 {
-    private final String attempt;
-    @NotNull
-    private final List<Mark> marks;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public Feedback(String attempt, @NotNull List<Mark> marks)
+    private String attempt;
+
+    @ElementCollection
+    private List<Mark> marks;
+
+    public Feedback()
+    {
+    }
+
+    public Feedback(final String attempt, @NotNull final List<Mark> marks)
     {
         this.attempt = attempt;
         this.marks = Objects.requireNonNull(marks);
@@ -37,8 +56,7 @@ public class Feedback
      * @param previousHint The previous hint.
      * @return The new hint.
      */
-    @NotNull
-    public char[] giveHint(@NotNull char[] previousHint)
+    public char[] giveHint(final char[] previousHint)
     {
         Objects.requireNonNull(previousHint, "Previous hint cannot be null");
 
@@ -52,28 +70,18 @@ public class Feedback
         return previousHint;
     }
 
-    @Override
-    public String toString()
+    public Long getId()
     {
-        return "Feedback{"
-                + "attempt='" + this.attempt + '\''
-                + ", marks=" + this.marks
-                + '}';
+        return this.id;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public String getAttempt()
     {
-        if (this == o) return true;
-        if (!(o instanceof Feedback)) return false;
-        Feedback feedback = (Feedback) o;
-        return Objects.equals(this.attempt, feedback.attempt)
-                && this.marks.equals(feedback.marks);
+        return this.attempt;
     }
 
-    @Override
-    public int hashCode()
+    public List<Mark> getMarks()
     {
-        return Objects.hash(this.attempt, this.marks);
+        return this.marks;
     }
 }
