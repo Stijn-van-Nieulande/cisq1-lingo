@@ -58,17 +58,17 @@ public class Round
 
     public boolean isWordGuessLimitReached()
     {
-        System.out.println(this.attempts + " >= " + ATTEMPT_LIMIT);
-        System.out.println(this.attempts >= ATTEMPT_LIMIT);
-        return this.attempts > ATTEMPT_LIMIT;
+        return this.attempts >= ATTEMPT_LIMIT;
     }
 
     public void guess(@NotNull final String attempt)
     {
         Objects.requireNonNull(attempt, "Attempt cannot be null.");
-        this.attempts++;
+
         if (this.isWordGuessLimitReached())
             throw new AttemptLimitReachedException("The attempt limit of " + ATTEMPT_LIMIT + " has been reached.");
+
+        this.attempts++;
 
         this.createFeedback(attempt);
         this.giveHint();
