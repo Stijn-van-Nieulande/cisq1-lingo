@@ -78,7 +78,7 @@ public class Game
         return this.gameState.equals(GameState.PLAYING);
     }
 
-    private void performGameChecks()
+    public void performGameChecks()
     {
         final Optional<Round> currentRound = this.getCurrentRound();
         if (currentRound.isEmpty()) return;
