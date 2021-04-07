@@ -69,7 +69,8 @@ public class GameService
     {
         final Game game = this.findGameById(gameId);
 
-        this.wordRepository.findWordByValue(attempt).orElseThrow(() -> new WordNotExistsException("The word \"" + attempt + "\" does not exists."));
+        if (this.wordRepository.findWordByValue(attempt).isEmpty())
+            throw new WordNotExistsException("The word \"" + attempt + "\" does not exists.");
 
         game.guessWord(attempt);
 
