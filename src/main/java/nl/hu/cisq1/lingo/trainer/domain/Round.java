@@ -74,7 +74,7 @@ public class Round
         this.giveHint();
     }
 
-    private void createFeedback(@NotNull final String attempt)
+    public void createFeedback(@NotNull final String attempt)
     {
         System.out.println("[debug] this.wordToGuess: " + this.wordToGuess);
         Objects.requireNonNull(attempt, "Attempt cannot be null.");
@@ -111,11 +111,6 @@ public class Round
         this.getLastFeedback().ifPresent(feedback -> this.lastHint = new String(feedback.giveHint(this.lastHint.toCharArray())));
     }
 
-    public String getWordToGuess()
-    {
-        return this.wordToGuess;
-    }
-
     public List<Feedback> getFeedbackHistory()
     {
         return this.feedbackHistory;
@@ -133,7 +128,7 @@ public class Round
         return this.attempts;
     }
 
-    public String getLastHint()
+    public @NotNull String getLastHint()
     {
         return this.lastHint;
     }
