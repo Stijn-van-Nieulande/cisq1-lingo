@@ -67,9 +67,10 @@ public class GameService
 
     public ProgressDTO guess(final long gameId, final String attempt)
     {
+        final Game game = this.findGameById(gameId);
+
         this.wordRepository.findWordByValue(attempt).orElseThrow(() -> new WordNotExistsException("The word \"" + attempt + "\" does not exists."));
 
-        final Game game = this.findGameById(gameId);
         game.guessWord(attempt);
 
         this.gameRepository.save(game);
