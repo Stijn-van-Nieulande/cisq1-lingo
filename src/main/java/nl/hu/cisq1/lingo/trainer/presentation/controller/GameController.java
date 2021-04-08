@@ -43,7 +43,7 @@ public class GameController
             return this.service.newGame();
         } catch (final GameStateException e) {
             // idk what http status to apply....
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class GameController
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (final WordLengthNotSupportedException | GameStateException e) {
             // idk what http status to apply....
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ public class GameController
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (final AttemptLimitReachedException | InvalidFeedbackException e) {
             // idk what http status to apply....
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }
