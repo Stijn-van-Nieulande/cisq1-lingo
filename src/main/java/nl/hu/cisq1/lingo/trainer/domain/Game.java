@@ -27,6 +27,7 @@ public class Game
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
     private int score;

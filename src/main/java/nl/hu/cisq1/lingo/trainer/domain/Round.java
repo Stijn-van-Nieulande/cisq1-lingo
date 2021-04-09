@@ -27,6 +27,7 @@ public class Round
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
     private String wordToGuess;
