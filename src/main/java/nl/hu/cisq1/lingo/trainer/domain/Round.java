@@ -80,7 +80,6 @@ public class Round
 
     public void createFeedback(@NotNull final String attempt)
     {
-        System.out.println("[debug] this.wordToGuess: " + this.wordToGuess);
         Objects.requireNonNull(attempt, "Attempt cannot be null.");
         final List<Mark> marks = new ArrayList<>();
 
