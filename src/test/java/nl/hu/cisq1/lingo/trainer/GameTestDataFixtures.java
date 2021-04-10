@@ -20,20 +20,13 @@ public class GameTestDataFixtures implements CommandLineRunner
         gameWithStatePlaying.startNewRound("borax");
         this.gameRepository.save(gameWithStatePlaying);
 
-        System.out.println("[debug] 1.1: " + gameWithStatePlaying.getId());
-        System.out.println("[debug] 1.2: " + gameWithStatePlaying.getGameState());
-
         final Game gameWithStateLost = new Game();
-
-        System.out.println("[debug] 2.1: " + gameWithStateLost.getId());
-        System.out.println("[debug] 2.2: " + gameWithStateLost.getGameState());
-
-        gameWithStatePlaying.startNewRound("borax");
-        gameWithStatePlaying.guessWord("conto");
-        gameWithStatePlaying.guessWord("conto");
-        gameWithStatePlaying.guessWord("conto");
-        gameWithStatePlaying.guessWord("conto");
-        gameWithStatePlaying.guessWord("conto");
+        gameWithStateLost.startNewRound("borax");
+        gameWithStateLost.guessWord("conto");
+        gameWithStateLost.guessWord("conto");
+        gameWithStateLost.guessWord("conto");
+        gameWithStateLost.guessWord("conto");
+        gameWithStateLost.guessWord("conto");
         this.gameRepository.save(gameWithStateLost);
     }
 }
