@@ -1,9 +1,9 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exception.GameStateException;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
