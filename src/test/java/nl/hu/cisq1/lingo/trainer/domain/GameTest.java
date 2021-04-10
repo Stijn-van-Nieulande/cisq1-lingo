@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -172,7 +173,7 @@ class GameTest
 
         if (currentRound.isEmpty()) throw new IllegalArgumentException("Current round is empty");
 
-        assertTrue(currentRound.get().getLastFeedback().isEmpty());
+        assertNull(currentRound.get().getLastFeedback());
         assertEquals(GameState.PLAYING, this.game.getGameState());
     }
 

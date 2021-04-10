@@ -89,15 +89,15 @@ public class Game
         final Optional<Round> currentRound = this.getCurrentRound();
         if (currentRound.isEmpty()) return;
 
-        if (currentRound.get().isWordGuessLimitReached()) {
+        if (currentRound.get().isWordGuessLimitReached() && !currentRound.get().isWordGuessed()) {
             this.gameState = GameState.LOST;
             return;
         }
 
-        final Optional<Feedback> lastAttempt = currentRound.get().getLastFeedback();
-        if (lastAttempt.isEmpty()) return;
+        final Feedback lastAttempt = currentRound.get().getLastFeedback();
+        if (lastAttempt == null) return;
 
-        if (lastAttempt.get().isWordGuessed()) {
+        if (lastAttempt.isWordGuessed()) {
             this.score += 5 * (5 - currentRound.get().getAttempts()) + 5;
             this.gameState = GameState.WON;
         }

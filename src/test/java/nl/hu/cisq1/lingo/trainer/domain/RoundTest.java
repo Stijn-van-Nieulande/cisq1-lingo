@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import nl.hu.cisq1.lingo.trainer.domain.exception.AttemptLimitReachedException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -110,7 +112,7 @@ class RoundTest
     void lastFeedbackReturnsEmptyWhenNoFeedbackAvailable()
     {
         assertTrue(this.round.getFeedbackHistory().isEmpty());
-        assertEquals(Optional.empty(), this.round.getLastFeedback());
+        assertNull(this.round.getLastFeedback());
     }
 
     @ParameterizedTest
@@ -121,11 +123,11 @@ class RoundTest
         this.round.guess(attempt);
 
         final Feedback expectedFeedback = new Feedback(attempt, expectedMarks);
-        final @NotNull Optional<Feedback> lastFeedback = this.round.getLastFeedback();
+        final @Nullable Feedback lastFeedback = this.round.getLastFeedback();
 
-        if (lastFeedback.isEmpty()) throw new IllegalArgumentException("Last feedback is empty");
+        if (lastFeedback == null) throw new IllegalArgumentException("Last feedback is empty");
 
-        assertEquals(expectedFeedback, lastFeedback.get());
+        assertEquals(expectedFeedback, lastFeedback);
     }
 
     @Test

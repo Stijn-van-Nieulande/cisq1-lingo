@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exception.AttemptLimitReachedException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -122,7 +123,9 @@ public class Round
 
     private void giveHint()
     {
-        this.getLastFeedback().ifPresent(feedback -> this.lastHint = new String(feedback.giveHint(this.lastHint.toCharArray())));
+        final Feedback lastFeedback = this.getLastFeedback();
+        if (lastFeedback == null) return;
+        this.lastHint = new String(lastFeedback.giveHint(this.lastHint.toCharArray()));
     }
 
     public List<Feedback> getFeedbackHistory()
@@ -130,11 +133,11 @@ public class Round
         return this.feedbackHistory;
     }
 
-    @NotNull
-    public Optional<Feedback> getLastFeedback()
+    @Nullable
+    public Feedback getLastFeedback()
     {
-        if (this.feedbackHistory.isEmpty()) return Optional.empty();
-        return Optional.of(this.feedbackHistory.get(this.feedbackHistory.size() - 1));
+        if (this.feedbackHistory.isEmpty()) return null;
+        return this.feedbackHistory.get(this.feedbackHistory.size() - 1);
     }
 
     public Integer getAttempts()
