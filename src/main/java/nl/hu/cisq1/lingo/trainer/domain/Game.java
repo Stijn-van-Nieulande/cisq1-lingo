@@ -89,7 +89,7 @@ public class Game
         final Optional<Round> currentRound = this.getCurrentRound();
         if (currentRound.isEmpty()) return;
 
-        if (currentRound.get().isWordGuessLimitReached() && !currentRound.get().isWordGuessed()) {
+        if (currentRound.get().isWordGuessLimitReached()) {
             this.gameState = GameState.LOST;
             return;
         }
