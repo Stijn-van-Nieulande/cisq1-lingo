@@ -31,6 +31,12 @@ public class Feedback
     {
     }
 
+    /**
+     * Feedback constructor.
+     *
+     * @param attempt The word attempt.
+     * @param marks   The given marks based on the attempt.
+     */
     public Feedback(final String attempt, @NotNull final List<Mark> marks)
     {
         this.attempt = attempt;
@@ -44,11 +50,21 @@ public class Feedback
         // throw new InvalidFeedbackException("The specified word length does not match the marks length.");
     }
 
+    /**
+     * Check if the word is guessed based on current feedback.
+     *
+     * @return True if all marks are correct.
+     */
     public boolean isWordGuessed()
     {
         return this.marks.stream().allMatch(mark -> mark.equals(Mark.CORRECT));
     }
 
+    /**
+     * Check if the word guess is invalid based on current feedback.
+     *
+     * @return True of any of the marks are invalid.
+     */
     public boolean isGuessInvalid()
     {
         return this.marks.stream().anyMatch(mark -> mark.equals(Mark.INVALID));
