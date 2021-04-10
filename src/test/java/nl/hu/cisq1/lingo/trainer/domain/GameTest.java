@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.GameStateException;
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -172,6 +173,7 @@ class GameTest
         this.game.guessWord("conto");
         this.game.guessWord("conto");
 
+        // FIXME
         assertTrue(this.game.getCurrentRound().get().isWordGuessLimitReached());
         assertFalse(this.game.getCurrentRound().get().isWordGuessed());
         assertEquals(GameState.LOST, this.game.getGameState());
@@ -185,5 +187,12 @@ class GameTest
         this.game.guessWord("borax");
 
         assertEquals(GameState.WON, this.game.getGameState());
+    }
+
+    @Test
+    @DisplayName("equals and hashcode are working as expected")
+    void equalsAndHashcodeAreCorrectlyImplemented()
+    {
+        EqualsVerifier.forClass(Game.class).verify();
     }
 }

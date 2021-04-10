@@ -30,11 +30,21 @@ public class GameService
         this.wordRepository = wordRepository;
     }
 
+    /**
+     * Find all games.
+     *
+     * @return A list of game progresses.
+     */
     public List<ProgressDTO> findAll()
     {
         return this.gameRepository.findAll().stream().map(this::mapGameToProgress).collect(Collectors.toList());
     }
 
+    /**
+     * Start a new game if the word length of 5 is supported.
+     *
+     * @return The current progress as {@link ProgressDTO}.
+     */
     public ProgressDTO newGame()
     {
         final Game game = new Game();
@@ -46,12 +56,24 @@ public class GameService
         return this.mapGameToProgress(game);
     }
 
+    /**
+     * Get the current progress of the game.
+     *
+     * @param gameId The game id to get the progress from.
+     * @return The current progress as {@link ProgressDTO}.
+     */
     public ProgressDTO getProgress(final long gameId)
     {
         final Game game = this.findGameById(gameId);
         return this.mapGameToProgress(game);
     }
 
+    /**
+     * Start a new round for a game.
+     *
+     * @param gameId The game id to get the progress from.
+     * @return The current progress as {@link ProgressDTO}.
+     */
     public ProgressDTO startNewRound(final long gameId)
     {
         final Game game = this.findGameById(gameId);
@@ -65,6 +87,13 @@ public class GameService
         return this.mapGameToProgress(game);
     }
 
+    /**
+     * Try to guess the word of a game.
+     *
+     * @param gameId  The game id to get the progress from.
+     * @param attempt The word attempt.
+     * @return The current progress as {@link ProgressDTO}.
+     */
     public ProgressDTO guess(final long gameId, final String attempt)
     {
         final Game game = this.findGameById(gameId);
@@ -73,7 +102,6 @@ public class GameService
             throw new WordNotExistsException("The word \"" + attempt + "\" does not exists.");
 
         game.guessWord(attempt);
-
         this.gameRepository.save(game);
 
         return this.mapGameToProgress(game);

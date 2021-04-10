@@ -27,6 +27,7 @@ public class Game
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
     private int score;
@@ -78,6 +79,11 @@ public class Game
         return this.gameState.equals(GameState.PLAYING);
     }
 
+    /**
+     * Perform game checks o the current round.
+     * Within the game checks, it is checked whether the word has been guessed and the player has won
+     * or whether the player has lost.
+     */
     public void performGameChecks()
     {
         final Optional<Round> currentRound = this.getCurrentRound();
