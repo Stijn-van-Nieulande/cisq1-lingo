@@ -27,6 +27,7 @@ public class Round
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
     private String wordToGuess;
@@ -65,6 +66,11 @@ public class Round
         return this.attempts >= ATTEMPT_LIMIT;
     }
 
+    /**
+     * Try to guess the word.
+     *
+     * @param attempt The word guess attempt.
+     */
     public void guess(@NotNull final String attempt)
     {
         Objects.requireNonNull(attempt, "Attempt cannot be null.");
@@ -78,9 +84,13 @@ public class Round
         this.giveHint();
     }
 
+    /**
+     * Create new feedback based on the word attempt and the word to guess.
+     *
+     * @param attempt The word guess attempt.
+     */
     public void createFeedback(@NotNull final String attempt)
     {
-        System.out.println("[debug] this.wordToGuess: " + this.wordToGuess);
         Objects.requireNonNull(attempt, "Attempt cannot be null.");
         final List<Mark> marks = new ArrayList<>();
 

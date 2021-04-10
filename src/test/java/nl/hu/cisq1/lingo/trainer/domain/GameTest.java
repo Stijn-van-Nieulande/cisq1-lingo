@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.GameStateException;
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -162,6 +163,20 @@ class GameTest
     }
 
     @Test
+    @DisplayName("the game state is still on PLAYING when not lost, won or waiting, word limit isn't reached and has no feedback")
+    void gameStateIsStillWaitingWhenNoRoundsAvailable3()
+    {
+        this.game.startNewRound("borax");
+
+        final Optional<Round> currentRound = this.game.getCurrentRound();
+
+        if (currentRound.isEmpty()) throw new IllegalArgumentException("Current round is empty");
+
+        assertTrue(currentRound.get().getLastFeedback().isEmpty());
+        assertEquals(GameState.PLAYING, this.game.getGameState());
+    }
+
+    @Test
     @DisplayName("the game state is LOST when the word guess limit is reached and the word is not guessed yet")
     void gameStateIsLostWhenWordGuessLimitIsReachedAndNotGuessed()
     {
@@ -172,8 +187,12 @@ class GameTest
         this.game.guessWord("conto");
         this.game.guessWord("conto");
 
-        assertTrue(this.game.getCurrentRound().get().isWordGuessLimitReached());
-        assertFalse(this.game.getCurrentRound().get().isWordGuessed());
+        final Optional<Round> currentRound = this.game.getCurrentRound();
+
+        if (currentRound.isEmpty()) throw new IllegalArgumentException("Current round is empty");
+
+        assertTrue(currentRound.get().isWordGuessLimitReached());
+        assertFalse(currentRound.get().isWordGuessed());
         assertEquals(GameState.LOST, this.game.getGameState());
     }
 
@@ -185,5 +204,12 @@ class GameTest
         this.game.guessWord("borax");
 
         assertEquals(GameState.WON, this.game.getGameState());
+    }
+
+    @Test
+    @DisplayName("equals and hashcode are working as expected")
+    void equalsAndHashcodeAreCorrectlyImplemented()
+    {
+        EqualsVerifier.forClass(Game.class).verify();
     }
 }

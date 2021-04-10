@@ -79,6 +79,13 @@
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <version>3.5.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -161,7 +168,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.6.2</version>
+                <version>1.6.4</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
