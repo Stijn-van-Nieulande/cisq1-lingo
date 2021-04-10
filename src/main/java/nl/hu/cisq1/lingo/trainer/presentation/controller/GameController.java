@@ -40,7 +40,7 @@ public class GameController
     {
         try {
             return this.service.newGame();
-        } catch (final GameStateException e) {
+        } catch (final GameStateException | WordLengthNotSupportedException e) {
             // idk what http status to apply....
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -76,7 +76,7 @@ public class GameController
             return this.service.guess(gameId, attempt);
         } catch (final GameNotFoundException | WordNotExistsException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (final AttemptLimitReachedException e) {
+        } catch (final AttemptLimitReachedException | GameStateException e) {
             // idk what http status to apply....
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
