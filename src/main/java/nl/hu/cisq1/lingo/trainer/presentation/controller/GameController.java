@@ -4,7 +4,6 @@ import nl.hu.cisq1.lingo.trainer.application.GameService;
 import nl.hu.cisq1.lingo.trainer.domain.exception.AttemptLimitReachedException;
 import nl.hu.cisq1.lingo.trainer.domain.exception.GameNotFoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exception.GameStateException;
-import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 import nl.hu.cisq1.lingo.trainer.domain.exception.WordNotExistsException;
 import nl.hu.cisq1.lingo.trainer.presentation.dto.ProgressDTO;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
@@ -41,7 +40,7 @@ public class GameController
     {
         try {
             return this.service.newGame();
-        } catch (final GameStateException e) {
+        } catch (final GameStateException | WordLengthNotSupportedException e) {
             // idk what http status to apply....
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -77,7 +76,7 @@ public class GameController
             return this.service.guess(gameId, attempt);
         } catch (final GameNotFoundException | WordNotExistsException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (final AttemptLimitReachedException | InvalidFeedbackException e) {
+        } catch (final AttemptLimitReachedException | GameStateException e) {
             // idk what http status to apply....
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

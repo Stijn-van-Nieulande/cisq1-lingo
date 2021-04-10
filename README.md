@@ -1,5 +1,6 @@
 # CISQ1: Lingo Trainer
 
+[![build.yml](https://github.com/Stijn-van-Nieulande/cisq1-lingo/actions/workflows/build.yml/badge.svg)](https://github.com/Stijn-van-Nieulande/cisq1-lingo/actions/workflows/build.yml)
 [![reviewdog](https://github.com/Stijn-van-Nieulande/cisq1-lingo/workflows/reviewdog/badge.svg?branch=main&event=push)](https://github.com/Stijn-van-Nieulande/cisq1-lingo/actions?query=workflow%3Areviewdog+event%3Apush+branch%3Amain)
 <br><br>
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=Stijn-van-Nieulande_cisq1-lingo)

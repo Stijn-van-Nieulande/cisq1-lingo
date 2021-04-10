@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -163,6 +164,20 @@ class GameTest
     }
 
     @Test
+    @DisplayName("the game state is still on PLAYING when not lost, won or waiting, word limit isn't reached and has no feedback")
+    void gameStateIsStillWaitingWhenNoRoundsAvailable3()
+    {
+        this.game.startNewRound("borax");
+
+        final Optional<Round> currentRound = this.game.getCurrentRound();
+
+        if (currentRound.isEmpty()) throw new IllegalArgumentException("Current round is empty");
+
+        assertNull(currentRound.get().getLastFeedback());
+        assertEquals(GameState.PLAYING, this.game.getGameState());
+    }
+
+    @Test
     @DisplayName("the game state is LOST when the word guess limit is reached and the word is not guessed yet")
     void gameStateIsLostWhenWordGuessLimitIsReachedAndNotGuessed()
     {
@@ -173,9 +188,12 @@ class GameTest
         this.game.guessWord("conto");
         this.game.guessWord("conto");
 
-        // FIXME
-        assertTrue(this.game.getCurrentRound().get().isWordGuessLimitReached());
-        assertFalse(this.game.getCurrentRound().get().isWordGuessed());
+        final Optional<Round> currentRound = this.game.getCurrentRound();
+
+        if (currentRound.isEmpty()) throw new IllegalArgumentException("Current round is empty");
+
+        assertTrue(currentRound.get().isWordGuessLimitReached());
+        assertFalse(currentRound.get().isWordGuessed());
         assertEquals(GameState.LOST, this.game.getGameState());
     }
 
