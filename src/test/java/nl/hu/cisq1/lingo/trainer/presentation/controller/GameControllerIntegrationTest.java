@@ -72,9 +72,9 @@ class GameControllerIntegrationTest
     @DisplayName("should start a new game")
     void startNewGame() throws Exception
     {
-        final RequestBuilder request = MockMvcRequestBuilders.post("/trainer");
-
         when(this.wordRepository.findRandomWordByLength(5)).thenReturn(Optional.of(new Word("conto")));
+
+        final RequestBuilder request = MockMvcRequestBuilders.post("/trainer");
 
         this.mockMvc.perform(request)
                 .andExpect(status().isOk())
