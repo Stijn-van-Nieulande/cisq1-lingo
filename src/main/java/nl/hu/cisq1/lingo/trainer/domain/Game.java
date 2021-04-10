@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -70,7 +71,7 @@ public class Game
     {
         Objects.requireNonNull(attempt, "Attempt cannot be null.");
         if (!this.isPlaying()) throw new GameStateException("There is no active round yet.");
-        this.getCurrentRound().ifPresent(round -> round.guess(attempt));
+        this.getCurrentRound().ifPresent(round -> round.guess(attempt.toLowerCase(Locale.ROOT)));
         this.performGameChecks();
     }
 
