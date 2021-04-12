@@ -18,7 +18,7 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <version.lib.org.jetbrains.annotations>16.0.1</version.lib.org.jetbrains.annotations>
+        <version.lib.org.jetbrains.annotations>20.1.0</version.lib.org.jetbrains.annotations>
 
         <sonar.projectKey>Stijn-van-Nieulande_cisq1-lingo</sonar.projectKey>
         <sonar.organization>stijn-van-nieulande</sonar.organization>
